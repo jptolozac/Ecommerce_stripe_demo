@@ -1,0 +1,322 @@
+[
+  {
+    "id": 1,
+    "title": "Kanchenjungha",
+    "img": "http://dummyimage.com/370x450.png/ff4444/ffffff",
+    "author": {
+      "id": 4,
+      "name": "Valina Sterndale",
+      "country_origin": "China",
+      "biography": "in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit"
+    },
+    "synopsis": "Unspecified motorcycle rider injured in collision with fixed or stationary object in traffic accident, subsequent encounter. in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit",
+    "categories": ["Drama", "Documentary"],
+    "publication_year": 2010,
+    "disponibility": 22,
+    "price": 19400
+  },
+  {
+    "id": 2,
+    "title": "Calling, The",
+    "img": "http://dummyimage.com/370x450.png/5fa2dd/ffffff",
+    "author": {
+      "id": 2,
+      "name": "Carly Pattillo",
+      "country_origin": "France",
+      "biography": "vestibulum quam sapien varius ut blandit non interdum in ante"
+    },
+    "synopsis": "Open bite, left hip, initial encounter. vestibulum quam sapien varius ut blandit non interdum in ante",
+    "categories": ["Documentary"],
+    "publication_year": 2017,
+    "disponibility": 21,
+    "price": 63900
+  },
+  {
+    "id": 3,
+    "title": "D.C.H. (Dil Chahta Hai)",
+    "img": "http://dummyimage.com/370x450.png/cc0000/ffffff",
+    "author": {
+      "id": 5,
+      "name": "Cherie Kavanagh",
+      "country_origin": "China",
+      "biography": "nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna"
+    },
+    "synopsis": "Contact with and (suspected) exposure to infections with a predominantly sexual mode of transmission nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna",
+    "categories": ["Drama|Mystery|Romance|Thriller"],
+    "publication_year": 2010,
+    "disponibility": 7,
+    "price": 80700
+  },
+  {
+    "id": 4,
+    "title": "Street Angel",
+    "img": "http://dummyimage.com/370x450.png/dddddd/000000",
+    "author": {
+      "id": 3,
+      "name": "Tiler Gribble",
+      "country_origin": "Peru",
+      "biography": "dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce"
+    },
+    "synopsis": "Posterior subluxation of left sternoclavicular joint, initial encounter dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce",
+    "categories": ["Drama"],
+    "publication_year": 2006,
+    "disponibility": 5,
+    "price": 40600
+  },
+  {
+    "id": 5,
+    "title": "Steel Helmet, The",
+    "img": "http://dummyimage.com/370x450.png/5fa2dd/ffffff",
+    "author": {
+      "id": 2,
+      "name": "Carly Pattillo",
+      "country_origin": "France",
+      "biography": "vestibulum quam sapien varius ut blandit non interdum in ante"
+    },
+    "synopsis": "Cutaneous abscess of foot vestibulum quam sapien varius ut blandit non interdum in ante",
+    "categories": ["Documentary|Musical"],
+    "publication_year": 2014,
+    "disponibility": 10,
+    "price": 71700
+  },
+  {
+    "id": 6,
+    "title": "Party, The (Boum, La)",
+    "img": "http://dummyimage.com/370x450.png/ff4444/ffffff",
+    "author": {
+      "id": 4,
+      "name": "Valina Sterndale",
+      "country_origin": "China",
+      "biography": "in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit"
+    },
+    "synopsis": "Other specified nontoxic goiter in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit",
+    "categories": ["Adventure|Drama|Romance", "Documentary|Musical"],
+    "publication_year": 2015,
+    "disponibility": 10,
+    "price": 10600
+  },
+  {
+    "id": 7,
+    "title": "The Wild World of Lydia Lunch",
+    "img": "http://dummyimage.com/370x450.png/cc0000/ffffff",
+    "author": {
+      "id": 5,
+      "name": "Cherie Kavanagh",
+      "country_origin": "China",
+      "biography": "nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna"
+    },
+    "synopsis": "Chronic disease of tonsils and adenoids, unspecified nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna",
+    "categories": ["Comedy|Drama|Horror"],
+    "publication_year": 2017,
+    "disponibility": 6,
+    "price": 90300
+  },
+  {
+    "id": 8,
+    "title": "Something Borrowed",
+    "img": "http://dummyimage.com/370x450.png/dddddd/000000",
+    "author": {
+      "id": 3,
+      "name": "Tiler Gribble",
+      "country_origin": "Peru",
+      "biography": "dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce"
+    },
+    "synopsis": "Poisoning by dental drugs, topically applied, accidental (unintentional), initial encounter dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce",
+    "categories": ["Drama|Mystery|Romance|Thriller"],
+    "publication_year": 2010,
+    "disponibility": 19,
+    "price": 59200
+  },
+  {
+    "id": 9,
+    "title": "The Baby Maker",
+    "img": "http://dummyimage.com/370x450.png/ff4444/ffffff",
+    "author": {
+      "id": 4,
+      "name": "Valina Sterndale",
+      "country_origin": "China",
+      "biography": "in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit"
+    },
+    "synopsis": "Infective myositis, unspecified site in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit",
+    "categories": ["Comedy|Drama|Horror"],
+    "publication_year": 2016,
+    "disponibility": 21,
+    "price": 93800
+  },
+  {
+    "id": 10,
+    "title": "Stories We Tell",
+    "img": "http://dummyimage.com/370x450.png/cc0000/ffffff",
+    "author": {
+      "id": 5,
+      "name": "Cherie Kavanagh",
+      "country_origin": "China",
+      "biography": "nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna"
+    },
+    "synopsis": "Contusion of index finger with damage to nail nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna",
+    "categories": ["Action|Comedy|Sci-Fi"],
+    "publication_year": 2010,
+    "disponibility": 4,
+    "price": 6000
+  },
+  {
+    "id": 11,
+    "title": "Hôtel des Invalides",
+    "img": "http://dummyimage.com/370x450.png/cc0000/ffffff",
+    "author": {
+      "id": 5,
+      "name": "Cherie Kavanagh",
+      "country_origin": "China",
+      "biography": "nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna"
+    },
+    "synopsis": "Mycosis fungoides, intra-abdominal lymph nodes nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna",
+    "categories": ["Documentary|Musical", "Action|Comedy|Sci-Fi", "Drama"],
+    "publication_year": 2004,
+    "disponibility": 3,
+    "price": 13600
+  },
+  {
+    "id": 12,
+    "title": "Night and Day",
+    "img": "http://dummyimage.com/370x450.png/dddddd/000000",
+    "author": {
+      "id": 3,
+      "name": "Tiler Gribble",
+      "country_origin": "Peru",
+      "biography": "dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce"
+    },
+    "synopsis": "Other placental disorders, second trimester dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce",
+    "categories": ["Drama"],
+    "publication_year": 2015,
+    "disponibility": 3,
+    "price": 30100
+  },
+  {
+    "id": 13,
+    "title": "Joneses, The",
+    "img": "http://dummyimage.com/370x450.png/cc0000/ffffff",
+    "author": {
+      "id": 5,
+      "name": "Cherie Kavanagh",
+      "country_origin": "China",
+      "biography": "nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna"
+    },
+    "synopsis": "Supervision of pregnancy resulting from assisted reproductive technology, third trimester nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna",
+    "categories": ["Documentary|Musical"],
+    "publication_year": 2002,
+    "disponibility": 20,
+    "price": 6700
+  },
+  {
+    "id": 14,
+    "title": "Rude Awakening",
+    "img": "http://dummyimage.com/370x450.png/ff4444/ffffff",
+    "author": {
+      "id": 1,
+      "name": "Mamie Danett",
+      "country_origin": "France",
+      "biography": "integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet"
+    },
+    "synopsis": "Displaced comminuted fracture of shaft of unspecified femur, initial encounter for open fracture type IIIA, IIIB, or IIIC integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet",
+    "categories": ["Drama"],
+    "publication_year": 2010,
+    "disponibility": 13,
+    "price": 32400
+  },
+  {
+    "id": 15,
+    "title": "P.S. I Love You",
+    "img": "http://dummyimage.com/370x450.png/dddddd/000000",
+    "author": {
+      "id": 3,
+      "name": "Tiler Gribble",
+      "country_origin": "Peru",
+      "biography": "dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce"
+    },
+    "synopsis": "Displaced fracture of left tibial spine, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with delayed healing dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce",
+    "categories": ["Comedy|Drama|Horror"],
+    "publication_year": 2012,
+    "disponibility": 9,
+    "price": 49100
+  },
+  {
+    "id": 16,
+    "title": "Third World Cop",
+    "img": "http://dummyimage.com/370x450.png/ff4444/ffffff",
+    "author": {
+      "id": 4,
+      "name": "Valina Sterndale",
+      "country_origin": "China",
+      "biography": "in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit"
+    },
+    "synopsis": "Poisoning by other fibrinolysis-affecting drugs, assault in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit",
+    "categories": ["Drama"],
+    "publication_year": 2013,
+    "disponibility": 17,
+    "price": 99700
+  },
+  {
+    "id": 17,
+    "title": "Devil's Carnival, The",
+    "img": "http://dummyimage.com/370x450.png/dddddd/000000",
+    "author": {
+      "id": 3,
+      "name": "Tiler Gribble",
+      "country_origin": "Peru",
+      "biography": "dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce"
+    },
+    "synopsis": "Poisoning by methadone, accidental (unintentional), subsequent encounter dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce",
+    "categories": ["Drama"],
+    "publication_year": 2015,
+    "disponibility": 10,
+    "price": 22600
+  },
+  {
+    "id": 18,
+    "title": "Welcome Mr. Marshall (Bienvenido Mister Marshall)",
+    "img": "http://dummyimage.com/370x450.png/cc0000/ffffff",
+    "author": {
+      "id": 5,
+      "name": "Cherie Kavanagh",
+      "country_origin": "China",
+      "biography": "nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna"
+    },
+    "synopsis": "Unspecified injury of axillary artery, right side, sequela nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna",
+    "categories": ["Comedy|Crime|Drama|Mystery|Romance"],
+    "publication_year": 2000,
+    "disponibility": 2,
+    "price": 18500
+  },
+  {
+    "id": 19,
+    "title": "August",
+    "img": "http://dummyimage.com/370x450.png/cc0000/ffffff",
+    "author": {
+      "id": 5,
+      "name": "Cherie Kavanagh",
+      "country_origin": "China",
+      "biography": "nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna"
+    },
+    "synopsis": "Contusion of unspecified ear, initial encounter nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna",
+    "categories": ["Adventure|Drama|Romance"],
+    "publication_year": 2012,
+    "disponibility": 10,
+    "price": 89200
+  },
+  {
+    "id": 20,
+    "title": "Storm Rider",
+    "img": "http://dummyimage.com/370x450.png/ff4444/ffffff",
+    "author": {
+      "id": 4,
+      "name": "Valina Sterndale",
+      "country_origin": "China",
+      "biography": "in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit"
+    },
+    "synopsis": "Interstitial myositis in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit",
+    "categories": ["Adventure|Drama|Romance"],
+    "publication_year": 2010,
+    "disponibility": 9,
+    "price": 83700
+  }
+]

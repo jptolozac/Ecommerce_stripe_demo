@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "nombre": "Drama"
+  },
+  {
+    "id": 2,
+    "nombre": "Comedy"
+  },
+  {
+    "id": 3,
+    "nombre": "Adventure|Drama|Romance"
+  },
+  {
+    "id": 4,
+    "nombre": "Comedy|Crime|Drama|Mystery|Romance"
+  },
+  {
+    "id": 5,
+    "nombre": "Drama|Mystery|Romance|Thriller"
+  },
+  {
+    "id": 6,
+    "nombre": "Drama"
+  },
+  {
+    "id": 7,
+    "nombre": "Action|Comedy|Sci-Fi"
+  },
+  {
+    "id": 8,
+    "nombre": "Comedy|Drama|Horror"
+  },
+  {
+    "id": 9,
+    "nombre": "Documentary"
+  },
+  {
+    "id": 10,
+    "nombre": "Documentary|Musical"
+  }
+]
