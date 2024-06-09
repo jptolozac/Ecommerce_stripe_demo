@@ -17,7 +17,8 @@ export async function getBooks() {
         });
         const data = await response.data.body;
         // console.log(data);
-        const books = Promise.all(data.map(async book => await shapeBooks(book)))
+        const books = await Promise.all(data.map(async book => await shapeBooks(book)))
+        // console.log(await books);
         return books
 
     } catch (error) {
@@ -32,6 +33,24 @@ export async function orderBook({ bookId }) {
 
     try {
         const response = await axios.post(`${ENDPOINT_LIBROS_FACTURAS}/book/${bookId}`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const data = await response.data
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export async function removeBookFromFacture({ bookId }){
+    const token = getCookie("token")
+    if (!token) return null
+
+    try {
+        const response = await axios.delete(`${ENDPOINT_LIBROS_FACTURAS}/book/${bookId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

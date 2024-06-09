@@ -9,6 +9,7 @@ class Libro {
     categorias;
     ventas;
     imagen_url;
+    cantidad;
 
     constructor(data){
         this.id = data.id;
@@ -21,6 +22,7 @@ class Libro {
         this.categorias = data.categorias;
         this.ventas = data.ventas;
         this.imagen_url = data.imagen_url;
+        this.cantidad = data.cantidad;
     }
 }
 

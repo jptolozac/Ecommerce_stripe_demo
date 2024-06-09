@@ -1,5 +1,3 @@
-import booksResults from '../mocks/books.json'
-
 
 export function shapePrevewBooks(books){
     return books.map(book => {
@@ -25,7 +23,8 @@ export function shapeBooks(book){
         categories: book.categorias,
         publication_year: book.publicacion_year,
         disponibility: book.disponibilidad,
-        price: book.precio
+        price: book.precio,
+        quantity: book.cantidad
     }
     return mapData
 }

@@ -1,6 +1,5 @@
 import bookLogo from '/book.svg'
 import magnifyingGlass from '../assets/magnifying-glass.svg'
-import shoppingCart from '../assets/shopping-cart.svg'
 import userImg from '../assets/user.svg'
 import { Categories } from './categories'
 import { ShowBooksSearch } from './showBooksSearch'
@@ -8,6 +7,7 @@ import { useSearchBooks } from '../hooks/searchBooks'
 import { Link } from 'react-router-dom'
 import { deleteCookie, getCookie } from '../helpers/cookies'
 import { useEffect, useState } from 'react'
+import { CartAside } from './cartAside'
 
 export function Header({ hideContent }) {
     
@@ -43,10 +43,7 @@ export function Header({ hideContent }) {
                             </form>
                         </div>
                         <div className="w-[175px] flex justify-between items-center">
-                            <Link to={"/shoppingcart"} className='flex items-center'>
-                                <img src={shoppingCart} alt="Imagen de un carrito de compras para ver las compras pendientes" />
-                                <span className='text-xl'>Carrito</span>
-                            </Link>
+                            <CartAside />
                             <Link to={loggedIn ? "/" : "/login"} className='relative first:text-red-600' id="sign-in-icon">
                                 <img src={userImg} alt="Icono de usuario para iniciar sesión o registrarse" />
                                 {loggedIn && <div className="w-[150px] h-[75px] bg-white absolute right-0 top-12 border rounded-lg justify-center items-center hidden" id="log-out-button">

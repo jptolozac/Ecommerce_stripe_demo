@@ -2,12 +2,15 @@ import { useParams } from "react-router-dom"
 import { MainLayout } from "../layouts/mainLayout"
 import { getBook } from "../services/Books"
 import { CoinFormatter } from "../helpers/coinFormatter"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { getCookie } from "../helpers/cookies"
 import { orderBook } from "../services/shoppingCart"
+import { CartContext } from "../context/cart"
 
 export function Product() {
     window.scroll(0, 0)
+
+    const { state, dispatch } = useContext(CartContext)
 
     const { bookId } = useParams()
     const [book, setBook] = useState()
@@ -20,12 +23,17 @@ export function Product() {
             setBook(data)
             setLoading(false)
         })
-    }, [])
+    }, [bookId])
 
-    // console.log(book)
+    console.log(state)
 
-    const handleOrderBook = async() => {
+    const handleOrderBook = async () => {
         await orderBook({ bookId })
+        dispatch({
+            type: 'ADD_TO_CART',
+            payload: book
+        })
+        alert("Libro añadido al carrito")
     }
     // TODO: Agregar un servicio carrito para agregar un libro
 

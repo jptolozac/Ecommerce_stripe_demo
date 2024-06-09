@@ -4,7 +4,6 @@ import { MainLayout } from "./layouts/mainLayout";
 import feriaDelLibroImg from "./assets/feria_del_libro.webp"
 import { ShowBooksCard } from "./components/showBooksCard";
 import { getBestNewBooks, getBestSellingBooks } from "./services/Books";
-import { BookCardLoading } from "./components/bookCardLoading";
 
 function App() {
 

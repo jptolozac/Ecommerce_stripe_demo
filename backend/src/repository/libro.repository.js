@@ -11,7 +11,7 @@ function getAll(){
 }
 
 function findByText(query){
-    return new Promise((resolve, reject) => con.query(`SELECT lb.* FROM ${table} lb join autor au WHERE lb.sinopsis LIKE concat('%',?,'%') or lb.titulo LIKE concat('%',?,'%') or au.nombre LIKE concat('%',?,'%') LIMIT 30`, [query, query, query], (error, result) => {
+    return new Promise((resolve, reject) => con.query(`SELECT lb.* FROM ${table} lb join autor au on (lb.autor_id = au.id) WHERE lb.sinopsis LIKE concat('%',?,'%') or lb.titulo LIKE concat('%',?,'%') or au.nombre LIKE concat('%',?,'%') LIMIT 30`, [query, query, query], (error, result) => {
         if(error) reject(error)
         resolve(result)
     }))

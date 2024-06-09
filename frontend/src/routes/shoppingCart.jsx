@@ -25,7 +25,7 @@ export function ShoppingCart() {
                 }
             </div>
             <div className="flex justify-center">
-                <Button sx={{
+                {books && <Button sx={{
                     backgroundColor: '#BF1717',
                     marginTop: '5rem',
                     paddingX: '2rem',
@@ -37,7 +37,7 @@ export function ShoppingCart() {
                 }}
                     type="submit"
                     onClick={handleSendBooks}
-                >PEDIR LIBROS</Button>
+                >PEDIR LIBROS</Button>}
             </div>
         </MainLayout>
     )

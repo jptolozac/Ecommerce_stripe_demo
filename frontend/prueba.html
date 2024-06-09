@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animar Aside</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .toggle-button {
+    margin: 20px;
+  }
+  aside {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Mismo valor que el ancho del aside */
+    width: 300px;
+    height: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 1s ease; /* Transición suave */
+    overflow: auto;
+  }
+  aside.show {
+    right: 0;
+  }
+</style>
+</head>
+<body>
+
+<button class="toggle-button" onclick="toggleAside()">Mostrar/Ocultar Aside</button>
+
+<aside id="myAside">
+  <h2>Contenido del Aside</h2>
+  <p>Este es el contenido del aside que se desliza desde la derecha.</p>
+</aside>
+
+<script>
+  function toggleAside() {
+    const aside = document.getElementById('myAside');
+    aside.classList.toggle('show');
+  }
+</script>
+
+</body>
+</html>

@@ -10,6 +10,7 @@ const { ClienteDTO } = require("../dto/cliente.dto");
 
 router.get(['', '/'], getBooks)
 router.post('/book/:id', addBook)
+router.delete('/book/:id', removeBook)
 
 
 async function getFacture(req, res){
@@ -56,5 +57,16 @@ async function addBook(req, res){
     }
 }
 
+async function removeBook(req, res){
+    try {
+        const facturaId = await getFacture(req, res)
+        await facturaRepository.removeLibro({ factura_id: facturaId, libro_id: parseInt(req.params.id) })
+
+        response.success(req, res, "Libro quitado del carrito")
+    } catch (error) {
+        console.log(error);
+        response.error(req, res, "Error interno");
+    }
+}
 
 module.exports = router

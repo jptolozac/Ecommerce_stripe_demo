@@ -2,8 +2,6 @@ import { BookCard } from "./bookCard"
 import { BookCardLoading } from "./bookCardLoading";
 
 export function ShowBooksSearch({ books, loading }) {
-    console.log(loading);
-    console.log(books)
     return (
         <div className="mx-auto max-w-screen-xl pb-8">
             {

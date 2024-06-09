@@ -20,7 +20,8 @@ async function formatBookResponse(req, res, book) {
         autor: autor,
         categorias: categorias,
         ventas: book.ventas,
-        imagen_url: book.imagen_url
+        imagen_url: book.imagen_url,
+        cantidad: book.cantidad
     });
 
     return formatedBook;

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { MainLayout } from "../layouts/mainLayout"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useSearchBooks } from "../hooks/searchBooks"
 import { ShowBooksSearch } from "../components/showBooksSearch"
 

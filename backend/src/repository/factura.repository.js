@@ -9,6 +9,14 @@ function addLibro(data){ //{ factura_id, libro_id }
     }))
 }
 
+function removeLibro({ factura_id, libro_id }){ //{ factura_id, libro_id }
+    console.log({ factura_id, libro_id });
+    return new Promise((resolve, reject) => con.query("DELETE FROM FACTURA_LIBRO WHERE LIBRO_ID=? AND FACTURA_ID=? LIMIT 1;", [libro_id, factura_id], (error, result) => {
+        if(error) reject(error)
+        resolve(result)
+    }))
+}
+
 function add({ cliente_id }){
     return new Promise((resolve, reject) => con.query(`INSERT INTO ${table} SET ?`, {
         cliente_id,
@@ -20,7 +28,7 @@ function add({ cliente_id }){
 }
 
 function getLibros({ factura_id }){
-    return new Promise((resolve, reject) => con.query("SELECT lb.* FROM factura_libro fl join libro lb on (fl.libro_id=lb.id) where fl.factura_id=? ", parseInt(factura_id), (error, result) => {
+    return new Promise((resolve, reject) => con.query("SELECT lb.*, count(lb.id) as cantidad FROM factura_libro fl join libro lb on (fl.libro_id=lb.id) where fl.factura_id=? group by lb.id", parseInt(factura_id), (error, result) => {
         if(error) reject(error)
         resolve(result)
     }))
@@ -33,4 +41,4 @@ function getPendingFacture({ cliente_id }){
     }))
 }
 
-module.exports = { addLibro, add, getLibros, getPendingFacture }
+module.exports = { addLibro, removeLibro, add, getLibros, getPendingFacture }
