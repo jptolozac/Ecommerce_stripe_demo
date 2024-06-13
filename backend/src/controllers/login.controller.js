@@ -17,7 +17,7 @@ router.post("/signup", clienteValidator, validarErrores, signup);
 
 
 async function login(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   let cliente = await clientRepository.getByEmail(new LoginDTO(req.body));
   cliente = cliente.length > 0 ? cliente[0] : null
 

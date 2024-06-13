@@ -15,5 +15,8 @@ module.exports = {
     },
     jwt: {
         secret: process.env.JWT_SECRET
+    },
+    stripe: {
+        secret: process.env.STRIPE_SECRET
     }
 }

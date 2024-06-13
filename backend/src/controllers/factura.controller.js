@@ -1,5 +1,7 @@
 const express = require("express")
 const router = express.Router()
+const config = require("../config")
+const Stripe = require("stripe")
 
 const response = require("../responses/response");
 const facturaRepository = require("../repository/factura.repository")
@@ -7,6 +9,7 @@ const formatBookResponse = require("../helpers/formatBookResponse.helper")
 const { getDecodedToken } = require("../auth/index");
 const { ClienteDTO } = require("../dto/cliente.dto");
 
+const stripe = new Stripe(config.stripe.secret)
 
 router.get(['', '/'], getBooks)
 router.post('/book/:id', addBook)
@@ -67,6 +70,28 @@ async function removeBook(req, res){
         console.log(error);
         response.error(req, res, "Error interno");
     }
+}
+
+// Pasarela de pagos (Aún no implementada)
+async function proceedToPayment(req, res){
+    try {
+        const facturaId = await getFacture(req, res)
+        await facturaRepository.updateTotal({ factura_id: facturaId })
+
+
+    } catch (error) {
+        
+    }
+}
+
+function createSession(req, res) {
+    stripe.checkout.sessions.create({
+        line_items: [
+            {
+                
+            }
+        ]
+    })
 }
 
 module.exports = router

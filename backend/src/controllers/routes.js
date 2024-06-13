@@ -11,7 +11,7 @@ const security = require("../middlewares/security")
 const clienteController = require("./cliente.controller")
 const libroController = require("./libro.controller")
 const categoriaController = require("./categoria.controller").router
-const facturaController = require("./facturaController.controller")
+const facturaController = require("./factura.controller")
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
