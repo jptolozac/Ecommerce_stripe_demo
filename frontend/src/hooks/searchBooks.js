@@ -1,14 +1,15 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import debounce from 'just-debounce-it'
 import { getBooksByCategory, getWantedBooks } from '../services/Books'
 
 
-export function useSearchBooks({ hideContent }) {
+export function useSearchBooks() {
     const [search, setSearch] = useState('')
     const [books, setBooks] = useState([])
     const [loading, setLoading] = useState(true)
 
-    const debounceSearch = useCallback(debounce((text) => {
+    //fix error eslint cambiando el useCallback por un useMemo
+    const debounceSearch = useMemo(() => debounce((text) => {
         getWantedBooks({ text }).then(data => setBooks(data))
         setLoading(false)
     }, 500), [])
