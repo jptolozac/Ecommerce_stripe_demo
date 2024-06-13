@@ -45,5 +45,9 @@ export const cartReducer = (state, action) => {
             console.log(books);
             return books.filter(book => book !== null);
         }
+        case 'CLEAR_CART': {
+            const newState = []
+            return newState
+        }
     }
 }

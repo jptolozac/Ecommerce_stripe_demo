@@ -5,6 +5,7 @@ import closeWindow from '../assets/close.svg'
 import { BookCard } from "./bookCard"
 import { orderBook, removeBookFromFacture } from "../services/shoppingCart"
 import { CartContext } from "../context/cart"
+import { Button } from "@mui/joy"
 
 
 export function CartAside() {
@@ -27,6 +28,11 @@ export function CartAside() {
                 payload: book
             })
         })
+    }
+
+    //pasarela de pagos (Aún no implementada)
+    const handleSendBooks = () => {
+        console.log(state);
     }
 
     console.log(state)
@@ -64,7 +70,21 @@ export function CartAside() {
                         </BookCard>
                     </div>
                 ))}
-                {/* <button onClick={(e) => plusOne(e.target.value)}>{state}</button> */}
+                <div className="flex justify-center">
+                    {state && <Button sx={{
+                        backgroundColor: '#BF1717',
+                        marginY: '2rem',
+                        paddingX: '2rem',
+                        paddingY: '.7rem',
+                        "&:hover": {
+                            backgroundColor: '#bf1717c9'
+                        },
+                        fontSize: "1.1rem"
+                    }}
+                        type="submit"
+                        onClick={handleSendBooks}
+                    >PEDIR LIBROS</Button>}
+                </div>
             </aside>
         </div>
     )

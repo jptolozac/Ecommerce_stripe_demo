@@ -9,16 +9,21 @@ export function useSearchBooks({ hideContent }) {
     const [loading, setLoading] = useState(true)
 
     const debounceSearch = useCallback(debounce((text) => {
-        getWantedBooks({ text }).then(data => setBooks(data))
-        setLoading(false)
+        getWantedBooks({ text }).then(data => {
+            setBooks(data)
+            setLoading(false)
+        })
     }, 500), [])
 
     const textSearch = (event) => {
-        setLoading(true)
         const currentSearch = event.target.value
 
+        if(currentSearch === "" || currentSearch.length < 2){
+            setSearch("")
+            return
+        }
+        setLoading(true)
         debounceSearch(currentSearch)
-
         setSearch(currentSearch)
     }
 
