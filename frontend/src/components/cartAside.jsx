@@ -5,7 +5,7 @@ import closeWindow from '../assets/close.svg'
 import { BookCard } from "./bookCard"
 import { orderBook, removeBookFromFacture } from "../services/shoppingCart"
 import { CartContext } from "../context/cart"
-import { Button } from "@mui/joy"
+import { proceedToPayment } from "../services/pays"
 
 
 export function CartAside() {
@@ -30,12 +30,11 @@ export function CartAside() {
         })
     }
 
-    //pasarela de pagos (Aún no implementada)
-    const handleSendBooks = () => {
-        console.log(state);
+    const handleProceedtoPayment = async() => {
+        const data = await proceedToPayment()
+        console.log(data);
+        window.location.assign(data)
     }
-
-    console.log(state)
 
     return (
         <div>
@@ -45,7 +44,7 @@ export function CartAside() {
             </label>
             <input type="checkbox" id={inputId} />
             <aside className="cart">
-                <div className="flex justify-end">
+                <div className="flex justify-end sticky top-0">
                     <label htmlFor={inputId}>
                         <img src={closeWindow} alt="Close window icon" className="bg-dark-red rounded-full w-8" />
                     </label>
@@ -70,21 +69,15 @@ export function CartAside() {
                         </BookCard>
                     </div>
                 ))}
-                <div className="flex justify-center">
-                    {state && <Button sx={{
-                        backgroundColor: '#BF1717',
-                        marginY: '2rem',
-                        paddingX: '2rem',
-                        paddingY: '.7rem',
-                        "&:hover": {
-                            backgroundColor: '#bf1717c9'
-                        },
-                        fontSize: "1.1rem"
-                    }}
-                        type="submit"
-                        onClick={handleSendBooks}
-                    >PEDIR LIBROS</Button>}
-                </div>
+                {state.length > 0 &&
+                    <div className="flex justify-center my-8">
+                        <button
+                            className="bg-dark-red text-white px-8 py-4 rounded-md"
+                            onClick={handleProceedtoPayment}
+                        >Proceder al pago</button>
+                    </div>
+                }
+                {/* <button onClick={(e) => plusOne(e.target.value)}>{state}</button> */}
             </aside>
         </div>
     )
