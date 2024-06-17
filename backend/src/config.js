@@ -5,7 +5,8 @@ module.exports = {
         port: process.env.PORT || 3000,
         host: process.env.HOST || '127.0.0.1',
         domain: `${process.env.PORT ? process.env.HOST + ":" + process.env.PORT : process.env.HOST }`,
-        protocol: process.env.PROTOCOL || 'http'
+        protocol: process.env.PROTOCOL || 'http',
+        frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173'
     },
     db:{
         mysql:{
