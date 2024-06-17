@@ -4,6 +4,7 @@ import feriaDelLibroImg from "../assets/feria_del_libro.webp"
 import { ShowBooksCard } from "../components/showBooksCard";
 import { getBestNewBooks, getBestSellingBooks } from "../services/Books";
 import { useEffect, useState } from "react";
+import { Toast } from "../components/toast";
 
 export function Home() {
   const [bestSellingBooks, setBestSellingBooks] = useState()
@@ -39,7 +40,7 @@ export function Home() {
           : null
       }
 
-
+      <Toast />
     </MainLayout>
   );
 }

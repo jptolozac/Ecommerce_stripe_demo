@@ -5,6 +5,7 @@ import closeWindow from '../assets/close.svg'
 import { BookCard } from "./bookCard"
 import { orderBook, removeBookFromFacture } from "../services/shoppingCart"
 import { CartContext } from "../context/cart"
+import { proceedToPayment } from "../services/pays"
 
 
 export function CartAside() {
@@ -29,7 +30,11 @@ export function CartAside() {
         })
     }
 
-    console.log(state)
+    const handleProceedtoPayment = async() => {
+        const data = await proceedToPayment()
+        console.log(data);
+        window.location.assign(data)
+    }
 
     return (
         <div>
@@ -39,7 +44,7 @@ export function CartAside() {
             </label>
             <input type="checkbox" id={inputId} />
             <aside className="cart">
-                <div className="flex justify-end">
+                <div className="flex justify-end sticky top-0">
                     <label htmlFor={inputId}>
                         <img src={closeWindow} alt="Close window icon" className="bg-dark-red rounded-full w-8" />
                     </label>
@@ -64,6 +69,14 @@ export function CartAside() {
                         </BookCard>
                     </div>
                 ))}
+                {state.length > 0 &&
+                    <div className="flex justify-center my-8">
+                        <button
+                            className="bg-dark-red text-white px-8 py-4 rounded-md"
+                            onClick={handleProceedtoPayment}
+                        >Proceder al pago</button>
+                    </div>
+                }
                 {/* <button onClick={(e) => plusOne(e.target.value)}>{state}</button> */}
             </aside>
         </div>

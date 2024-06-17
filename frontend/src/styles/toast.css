@@ -1,0 +1,29 @@
+.toast{
+    position: fixed;
+    bottom: 15px;
+    left: 20px;
+    color: white;
+    width: 800px;
+    animation: toastInOut 7s forwards;
+}
+
+@keyframes toastInOut {
+    0% { opacity: 0; transform: translateY(50%); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(50%); }
+}
+
+.toast > div{
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+}
+
+.toast > .successful{
+    background-color: #4BB543;
+}
+.toast > .canceled{
+    background-color: #cf142b;
+}
