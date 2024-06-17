@@ -12,6 +12,7 @@ const clienteController = require("./cliente.controller")
 const libroController = require("./libro.controller")
 const categoriaController = require("./categoria.controller").router
 const facturaController = require("./factura.controller")
+const pagoController = require("./pago.controller")
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -28,6 +29,7 @@ app.use(cors())
 app.use(morgan(':status :method :url :res[content-length] - :response-time ms :date'))
 
 app.set("port", config.app.port)
+app.set("host", config.app.host)
 
 app.use('/api', loginController)
 
@@ -35,6 +37,7 @@ app.use('/api/clientes', security, clienteController)
 app.use('/api/libros'/* , security */, libroController)
 app.use('/api/categorias'/* , security */, categoriaController)
 app.use('/api/facturas', security, facturaController)
+app.use('/api/pagos', pagoController)
 
 
 

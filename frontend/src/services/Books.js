@@ -1,5 +1,4 @@
 import { shapeBooks, shapePrevewBooks } from '../helpers/shapeBooks'
-import booksResults from '../mocks/books.json'
 
 const BOOKS_ENPOINT = "http://localhost:3000/api/libros"
 
