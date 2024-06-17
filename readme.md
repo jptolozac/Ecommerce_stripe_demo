@@ -53,7 +53,7 @@ To get started with the project, follow these steps:
 1. Create a `.env` file in the `frontend` directory with the following environment variables:
 
     ```env
-    REACT_APP_BACKEND_URL=https://your-backend-domain.com
+    VITE_BACKEND_URL
     ```
 
 ## Usage
