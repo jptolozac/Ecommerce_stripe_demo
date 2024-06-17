@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const LOGIN_ENDPOINT = "http://localhost:3000/api"
+// eslint-disable-next-line no-undef
+const LOGIN_ENDPOINT = import.meta.env.VITE_BACKEND_URL
 
 export async function login({ username, password }){
     const form = {

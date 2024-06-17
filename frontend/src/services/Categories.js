@@ -1,6 +1,5 @@
-import cartegoriesResults from '../mocks/categories.json'
-
-const CATEGORY_ENDPOINT = "http://localhost:3000/api/categorias";
+// eslint-disable-next-line no-undef
+const CATEGORY_ENDPOINT = `${import.meta.env.VITE_BACKEND_URL}/categorias`;
 
 export async function getCategories() {
     const response = await fetch(CATEGORY_ENDPOINT)

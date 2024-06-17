@@ -1,7 +1,8 @@
 import axios from "axios"
 import { getCookie } from "../helpers/cookies"
 
-const ENDPOINT_LIBROS_PAGOS = "http://localhost:3000/api/pagos"
+// eslint-disable-next-line no-undef
+const ENDPOINT_LIBROS_PAGOS = `${import.meta.env.VITE_BACKEND_URL}/pagos`
 
 
 export async function proceedToPayment(){

@@ -1,13 +1,13 @@
 import { shapeBooks, shapePrevewBooks } from '../helpers/shapeBooks'
 
-const BOOKS_ENPOINT = "http://localhost:3000/api/libros"
+const BOOKS_ENPOINT = `${import.meta.env.VITE_BACKEND_URL}/libros`
 
-export async function getBestSellingBooks(){
+export async function getBestSellingBooks() {
     try {
         const response = await fetch(`${BOOKS_ENPOINT}/libros_mas_vendidos`)
         const data = await response.json()
-        if(data.error) return []
-        
+        if (data.error) return []
+
         let booksResults = data.body
         booksResults = shapePrevewBooks(booksResults)
         return booksResults
@@ -17,12 +17,12 @@ export async function getBestSellingBooks(){
     }
 }
 
-export async function getBestNewBooks(){
+export async function getBestNewBooks() {
     try {
         const response = await fetch(`${BOOKS_ENPOINT}/libros_mas_vendidos_2024`)
         const data = await response.json()
-        if(data.error) return []
-        
+        if (data.error) return []
+
         let booksResults = data.body
         booksResults = shapePrevewBooks(booksResults)
         return booksResults
@@ -32,15 +32,15 @@ export async function getBestNewBooks(){
     }
 }
 
-export async function getWantedBooks({ text }){
+export async function getWantedBooks({ text }) {
     try {
         const response = await fetch(`${BOOKS_ENPOINT}?q=${text}`)
         const data = await response.json()
-        if(data.error) return []
-    
+        if (data.error) return []
+
         const books = data.body
         return shapePrevewBooks(books)
-        
+
     } catch (error) {
         return []
     }
@@ -48,15 +48,15 @@ export async function getWantedBooks({ text }){
     // return books.filter(book => book.title.toLowerCase().includes(text))
 }
 
-export async function getBooksByCategory({ category }){ //obligatorio en el backend
+export async function getBooksByCategory({ category }) { //obligatorio en el backend
     try {
         const response = await fetch(`${BOOKS_ENPOINT}/categorias/${category}`)
         const data = await response.json()
-        if(data.error) return []
-    
+        if (data.error) return []
+
         const books = data.body
         return shapePrevewBooks(books)
-        
+
     } catch (error) {
         return []
     }
@@ -68,15 +68,15 @@ export async function getBooksByCategory({ category }){ //obligatorio en el back
     // return shapePrevewBooks(books)
 }
 
-export async function getBook({ bookId }){
+export async function getBook({ bookId }) {
     try {
         const response = await fetch(`${BOOKS_ENPOINT}/${bookId}`)
         const data = await response.json()
-        if(data.error) return []
-    
+        if (data.error) return []
+
         const books = data.body
         return shapeBooks(books)
-        
+
     } catch (error) {
         return []
     }

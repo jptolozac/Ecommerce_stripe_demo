@@ -2,11 +2,12 @@ import axios from "axios";
 import { getCookie } from "../helpers/cookies";
 import { shapeBooks } from "../helpers/shapeBooks";
 
-const ENDPOINT_LIBROS_FACTURAS = "http://localhost:3000/api/facturas"
+// eslint-disable-next-line no-undef
+const ENDPOINT_LIBROS_FACTURAS = `${import.meta.env.VITE_BACKEND_URL}/facturas`
 
 export async function getBooks() {
     const token = getCookie("token");
-    // console.log(token);
+    console.log(ENDPOINT_LIBROS_FACTURAS);
     if (!token)
         return null
     try {
