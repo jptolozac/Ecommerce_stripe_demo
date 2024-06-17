@@ -6,17 +6,24 @@ import { ShowBooksSearch } from './showBooksSearch'
 import { useSearchBooks } from '../hooks/searchBooks'
 import { Link } from 'react-router-dom'
 import { deleteCookie, getCookie } from '../helpers/cookies'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { CartAside } from './cartAside'
+import { CartContext } from '../context/cart'
 
 export function Header({ hideContent }) {
     
     const { search, books, loading, textSearch, handleSubmit } = useSearchBooks({ hideContent })
-    const isSearch = search !== ''
     const [loggedIn, setLoggedIn] = useState(false)
+    const { dispatch } = useContext(CartContext)
+    const isSearch = search !== ''
+
+    const clearCart = () => dispatch({
+        type: 'CLEAR_CART'
+    })
 
     const handleLogOut = () => {
         deleteCookie('token')
+        clearCart()
         setLoggedIn(false)
     }
 

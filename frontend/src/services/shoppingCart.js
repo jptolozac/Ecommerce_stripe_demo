@@ -45,7 +45,7 @@ export async function orderBook({ bookId }) {
     }
 }
 
-export async function removeBookFromFacture({ bookId }){
+export async function removeBookFromFacture({ bookId }) {
     const token = getCookie("token")
     if (!token) return null
 
@@ -60,5 +60,16 @@ export async function removeBookFromFacture({ bookId }){
     } catch (error) {
         console.log(error);
         return null;
+    }
+}
+
+export async function proceedToPayment() {
+    try {
+        const response = await axios.post(`${ENDPOINT_LIBROS_FACTURAS/* ETC... */}`, {})
+        const data = await response.data()
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+        return null
     }
 }

@@ -15,11 +15,14 @@ export function useSearchBooks() {
     }, 500), [])
 
     const textSearch = (event) => {
-        setLoading(true)
         const currentSearch = event.target.value
 
+        if(currentSearch === "" || currentSearch.length < 2){
+            setSearch("")
+            return
+        }
+        setLoading(true)
         debounceSearch(currentSearch)
-
         setSearch(currentSearch)
     }
 
