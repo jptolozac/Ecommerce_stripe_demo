@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/joy/styles';
 import Input from '@mui/joy/Input';
-import CheckCircleOutlined from '@mui/icons-material/CheckCircleOutlined';
 
 const StyledInput = styled('input')({
     border: 'none', // remove the native input border
@@ -68,7 +67,6 @@ const InnerInput = React.forwardRef(function InnerInput(props, ref) {
 export default function FloatingLabelInput({ placeholder="", type="text", label, className, ...props }) {
     return (
         <Input
-            // endDecorator={<CheckCircleOutlined />}
             slots={{ input: InnerInput }}
             slotProps={{ input: { ...props, placeholder , type , label } }}
             sx={{

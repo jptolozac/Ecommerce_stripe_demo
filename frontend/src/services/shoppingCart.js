@@ -2,7 +2,6 @@ import axios from "axios";
 import { getCookie } from "../helpers/cookies";
 import { shapeBooks } from "../helpers/shapeBooks";
 
-// eslint-disable-next-line no-undef
 const ENDPOINT_LIBROS_FACTURAS = `${import.meta.env.VITE_BACKEND_URL}/facturas`
 
 export async function getBooks() {
