@@ -1,11 +1,9 @@
-import { getBooks } from "../services/shoppingCart"
-
-export const cartInitialState = await getBooks() || []
+export const cartInitialState = []
 
 export const cartReducer = (state, action) => {
     switch (action.type) {
-        case 'PLUS': {
-            return state + 1
+        case 'SET_CART': {
+            return action.payload
         }
         case 'ADD_TO_CART': {
             const { id } = action.payload
@@ -49,5 +47,7 @@ export const cartReducer = (state, action) => {
             const newState = []
             return newState
         }
+        default:
+            return state
     }
 }

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { deleteCookie, getCookie } from '../helpers/cookies'
 import { useContext, useEffect, useState } from 'react'
 import { CartAside } from './cartAside'
-import { CartContext } from '../context/cart'
+import { CartContext } from '../context/cartContext'
 
 export function Header({ hideContent }) {
     
