@@ -1,0 +1,19 @@
+{
+  "name": "ecommerce-stripe-demo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Bookstore e-commerce monorepo (Express backend + React frontend) with Stripe payments",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "lint": "npm run lint --workspace=frontend",
+    "preview": "npm run preview --workspace=frontend"
+  },
+  "author": "Jean Paul Toloza",
+  "license": "ISC"
+}
