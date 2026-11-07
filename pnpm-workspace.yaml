@@ -1,0 +1,9 @@
+packages:
+  - backend
+  - frontend
+
+# pnpm 10 skips dependency install scripts unless allowed here
+onlyBuiltDependencies:
+  - "@swc/core"
+  - bcrypt
+  - esbuild

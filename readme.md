@@ -21,16 +21,16 @@ To get started with the project, follow these steps:
 
 2. **Install dependencies for both the backend and the frontend:**
 
-    The project is an [npm workspaces](https://docs.npmjs.com/cli/using-npm/workspaces) monorepo: `backend` and `frontend` share a single `node_modules` folder and a single `package-lock.json` at the repository root. Run the install once, from the root:
+    The project is a [pnpm workspace](https://pnpm.io/workspaces) monorepo (requires [pnpm](https://pnpm.io/installation) 10): `backend` and `frontend` share a single `pnpm-lock.yaml` and a single package store in the root `node_modules`. Run the install once, from the root:
 
     ```bash
-    npm install
+    pnpm install
     ```
 
-    To add a dependency to one of the packages, run it from the root with `--workspace`:
+    To add a dependency to one of the packages, run it from the root with `--filter`:
 
     ```bash
-    npm install <package> --workspace=backend
+    pnpm add <package> --filter backend
     ```
 
 ## Configuration
@@ -68,7 +68,7 @@ To get started with the project, follow these steps:
 To start the backend server, run from the repository root:
 
 ```bash
-npm run dev:backend
+pnpm dev:backend
 ```
 
 ### Running the frontend
@@ -76,7 +76,7 @@ npm run dev:backend
 To start the frontend, run from the repository root:
 
 ```bash
-npm run dev:frontend
+pnpm dev:frontend
 ```
 
-Other root scripts: `npm run build`, `npm run lint` and `npm run preview` (all for the frontend).
+Other root scripts: `pnpm build`, `pnpm lint` and `pnpm preview` (all for the frontend).
