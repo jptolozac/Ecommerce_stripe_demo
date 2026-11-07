@@ -4,16 +4,16 @@ import userImg from '../assets/user.svg'
 import { Categories } from './categories'
 import { ShowBooksSearch } from './showBooksSearch'
 import { useSearchBooks } from '../hooks/searchBooks'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { deleteCookie, getCookie } from '../helpers/cookies'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { CartAside } from './cartAside'
 import { CartContext } from '../context/cartContext'
 
 export function Header({ hideContent }) {
     
     const { search, books, loading, textSearch, handleSubmit } = useSearchBooks({ hideContent })
-    const [loggedIn, setLoggedIn] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(() => Boolean(getCookie('token')))
     const { dispatch } = useContext(CartContext)
     const isSearch = search !== ''
 
@@ -27,10 +27,6 @@ export function Header({ hideContent }) {
         setLoggedIn(false)
     }
 
-    useEffect(() => {
-        if(getCookie('token')) setLoggedIn(true)
-    }, [])
-    
     return (
         <>
             <div className="h-[30px] bg-dark-red" />
