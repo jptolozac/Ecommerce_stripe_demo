@@ -47,7 +47,7 @@ To get started with the project, follow these steps:
     | --- | --- |
     | `PORT`, `HOST`, `PROTOCOL` | Where the API listens; also used to build the Stripe success/cancel URLs |
     | `FRONTEND_URL` | Frontend URL that Stripe payment redirects return to |
-    | `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DB` | MySQL connection |
+    | `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE` | MySQL connection |
     | `JWT_SECRET` | Secret used to sign JWT tokens |
     | `STRIPE_SECRET` | Stripe secret key (use a `sk_test_...` key for development) |
 
