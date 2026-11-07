@@ -79,4 +79,4 @@ To start the frontend, run from the repository root:
 pnpm dev:frontend
 ```
 
-Other root scripts: `pnpm build`, `pnpm lint` and `pnpm preview` (all for the frontend).
+Other root scripts: `pnpm build`, `pnpm lint` and `pnpm preview` (all for the frontend), and `pnpm test` to run the backend unit tests (Jest, no database or Stripe key needed; `pnpm --filter backend test:coverage` for coverage).

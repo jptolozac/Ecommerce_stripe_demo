@@ -63,6 +63,13 @@ async function proceedToPayment(req, res) {
     }
 }
 
+// First 100 chars of the synopsis; Stripe rejects an empty description, so omit it in that case
+function shortDescription(sinopsis) {
+    const text = (sinopsis || "").trim()
+    if (!text) return undefined
+    return text.length > 100 ? text.slice(0, 100) + '...' : text
+}
+
 async function createSession(req, res, booksInCart) {
     const client_email = req.user.correo
     const success_url = `${config.app.protocol}://${config.app.domain}${req.baseUrl}/successfulPayment?client_email=${client_email}`
@@ -72,7 +79,7 @@ async function createSession(req, res, booksInCart) {
         price_data: {
             product_data: {
                 name: book.titulo,
-                description: book.sinopsis.slice(100) + '...'
+                description: shortDescription(book.sinopsis)
             },
             currency: 'cop',
             unit_amount: parseInt(book.precio + "00")
