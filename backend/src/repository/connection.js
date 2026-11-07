@@ -1,4 +1,4 @@
-const mysql = require("mysql")
+const mysql = require("mysql2")
 const config = require("../config")
 
 const dbconfig = {
@@ -9,30 +9,19 @@ const dbconfig = {
     database: config.db.mysql.database
 }
 
-function mysqlCon(){
-    let con
-    con = mysql.createConnection(dbconfig)
+// The pool replaces dropped connections on its own, so repositories can keep using con.query
+const con = mysql.createPool(dbconfig)
 
-    con.connect((err) => {
+function mysqlCon(){
+    con.getConnection((err, connection) => {
         if(err){
-            console.log("Error en la base de datos: ", err);
-            setTimeout(mysql, 500)
+            console.log("Error en la base de datos: ", err.message);
+            setTimeout(mysqlCon, 2000)
         }else{
             console.log("Conexión a mysql creada");
+            connection.release()
         }
     })
-
-    con.on('error', err => {
-        console.log("Error en la base de datos: ", err);
-        if(err.code === 'PROTOCOL_CONNECTION_LOST'){
-            mysqlCon()
-        }else{
-            throw err
-        }
-    })
-    return con
 }
-
-const con = mysqlCon()
 
 module.exports = { mysqlCon, con }
