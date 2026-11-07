@@ -21,7 +21,7 @@ To get started with the project, follow these steps:
 
 2. **Install dependencies for both the backend and the frontend:**
 
-    The project is a [pnpm workspace](https://pnpm.io/workspaces) monorepo (requires [pnpm](https://pnpm.io/installation) 10): `backend` and `frontend` share a single `pnpm-lock.yaml` and a single package store in the root `node_modules`. Run the install once, from the root:
+    The project is a [pnpm workspace](https://pnpm.io/workspaces) monorepo (requires Node.js 20.19+ or 22.12+ and [pnpm](https://pnpm.io/installation) 10): `backend` and `frontend` share a single `pnpm-lock.yaml` and a single package store in the root `node_modules`. Run the install once, from the root:
 
     ```bash
     pnpm install
@@ -47,7 +47,7 @@ To get started with the project, follow these steps:
     | --- | --- |
     | `PORT`, `HOST`, `PROTOCOL` | Where the API listens; also used to build the Stripe success/cancel URLs |
     | `FRONTEND_URL` | Frontend URL that Stripe payment redirects return to |
-    | `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DB` | MySQL connection |
+    | `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE` | MySQL connection |
     | `JWT_SECRET` | Secret used to sign JWT tokens |
     | `STRIPE_SECRET` | Stripe secret key (use a `sk_test_...` key for development) |
 

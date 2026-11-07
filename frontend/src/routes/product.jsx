@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router"
 import { MainLayout } from "../layouts/mainLayout"
 import { getBook } from "../services/Books"
 import { CoinFormatter } from "../helpers/coinFormatter"
@@ -13,16 +13,18 @@ export function Product() {
     const { state, dispatch } = useContext(CartContext)
 
     const { bookId } = useParams()
-    const [book, setBook] = useState()
-    const [loading, setLoading] = useState(true)
+    // Remember which bookId the loaded book belongs to, so loading is derived instead of set in the effect
+    const [loaded, setLoaded] = useState({ bookId: null, book: undefined })
+    const { book } = loaded
+    const loading = loaded.bookId !== bookId
     const userLogged = getCookie("token")
 
     useEffect(() => {
-        setLoading(true)
+        let ignore = false
         getBook({ bookId: parseInt(bookId) }).then(data => {
-            setBook(data)
-            setLoading(false)
+            if (!ignore) setLoaded({ bookId, book: data })
         })
+        return () => { ignore = true }
     }, [bookId])
 
     console.log(state)

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { RouterProvider, createHashRouter } from 'react-router-dom'
+import { RouterProvider, createHashRouter } from 'react-router'
 import { Home } from './routes/home.jsx'
 import { Product } from './routes/product.jsx'
 import { BooksCategory } from './routes/booksCategory.jsx'

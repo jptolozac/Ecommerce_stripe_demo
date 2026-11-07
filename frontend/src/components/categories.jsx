@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router"
 import { getCategories } from "../services/Categories"
 import { useEffect, useState } from "react"
 

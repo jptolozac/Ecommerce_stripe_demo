@@ -8,7 +8,9 @@ const clienteRepository = require("../repository/cliente.repository")
 const config = require("../config")
 const Stripe = require("stripe")
 const { PagoDTO } = require("../dto/pago.dto")
-const stripe = new Stripe(config.stripe.secret)
+// Without STRIPE_SECRET the API still starts; only payments are unavailable
+const stripe = config.stripe.secret ? new Stripe(config.stripe.secret) : null
+if (!stripe) console.log("STRIPE_SECRET no configurado: los pagos no estarán disponibles")
 
 const FRONTEND_URL = config.app.frontendUrl
 
@@ -47,6 +49,7 @@ async function getFacture(req, res, { client_email=null }={}) {
 
 // Pasarela de pagos (Aún no implementada)
 async function proceedToPayment(req, res) {
+    if (!stripe) return response.error(req, res, "Pasarela de pagos no configurada", 503)
     try {
         const facturaId = await getFacture(req, res)
         await facturaRepository.updateTotal({ factura_id: facturaId })

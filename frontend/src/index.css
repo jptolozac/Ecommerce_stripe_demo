@@ -1,7 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Theme migrated from the Tailwind v3 tailwind.config.js (colors and screens) */
+@theme {
+  --color-dark-red: #BF1717;
+  --color-custom-green: #83A300;
+  --color-custom-gray: #D9D9D9;
+
+  --breakpoint-xl: 1280px;
+}
+
+/* Keep Tailwind v3 defaults the UI was designed with: gray borders and pointer cursor on buttons */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
 
 :root{
   font-family: "Libre Baskerville", serif;
