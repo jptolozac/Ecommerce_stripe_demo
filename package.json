@@ -12,7 +12,8 @@
     "dev:frontend": "pnpm --filter frontend dev",
     "build": "pnpm --filter frontend build",
     "lint": "pnpm --filter frontend lint",
-    "preview": "pnpm --filter frontend preview"
+    "preview": "pnpm --filter frontend preview",
+    "test": "pnpm --filter backend test"
   },
   "author": "Jean Paul Toloza",
   "license": "ISC"

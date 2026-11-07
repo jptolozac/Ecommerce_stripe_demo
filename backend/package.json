@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch ./src/index.js"
+    "test": "jest",
+    "dev": "node --watch ./src/index.js",
+    "test:coverage": "jest --coverage"
   },
   "author": "Jean Paul Toloza",
   "license": "ISC",
@@ -21,5 +22,9 @@
     "morgan": "^1.12.1",
     "mysql2": "^3.24.6",
     "stripe": "^23.1.0"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "supertest": "^7.3.1"
   }
 }
