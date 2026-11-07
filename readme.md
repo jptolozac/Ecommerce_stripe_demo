@@ -21,7 +21,7 @@ To get started with the project, follow these steps:
 
 2. **Install dependencies for both the backend and the frontend:**
 
-    The project is a [pnpm workspace](https://pnpm.io/workspaces) monorepo (requires [pnpm](https://pnpm.io/installation) 10): `backend` and `frontend` share a single `pnpm-lock.yaml` and a single package store in the root `node_modules`. Run the install once, from the root:
+    The project is a [pnpm workspace](https://pnpm.io/workspaces) monorepo (requires Node.js 20.19+ or 22.12+ and [pnpm](https://pnpm.io/installation) 10): `backend` and `frontend` share a single `pnpm-lock.yaml` and a single package store in the root `node_modules`. Run the install once, from the root:
 
     ```bash
     pnpm install

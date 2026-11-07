@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "description": "Bookstore e-commerce monorepo (Express backend + React frontend) with Stripe payments",
   "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
   "scripts": {
     "dev:backend": "pnpm --filter backend dev",
     "dev:frontend": "pnpm --filter frontend dev",
