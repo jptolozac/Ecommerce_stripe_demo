@@ -37,28 +37,28 @@ To get started with the project, follow these steps:
 
 ### Backend
 
-1. Create a `.env` file in the `backend` directory with the following environment variables:
+1. Copy `backend/.env-example` to `backend/.env` and fill in the values:
 
-    ```env
-    PORT
-    HOST
-    MYSQL_HOST
-    MYSQL_PORT
-    MYSQL_USER
-    MYSQL_PASSWORD
-    MYSQL_DB
-    JWT_SECRET
-    STRIPE_SECRET
+    ```bash
+    cp backend/.env-example backend/.env
     ```
 
-2. Ensure you have a MYSQL instance running and update the connection string in your backend configuration if necessary.
+    | Variable | Description |
+    | --- | --- |
+    | `PORT`, `HOST`, `PROTOCOL` | Where the API listens; also used to build the Stripe success/cancel URLs |
+    | `FRONTEND_URL` | Frontend URL that Stripe payment redirects return to |
+    | `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DB` | MySQL connection |
+    | `JWT_SECRET` | Secret used to sign JWT tokens |
+    | `STRIPE_SECRET` | Stripe secret key (use a `sk_test_...` key for development) |
+
+2. Ensure you have a MySQL instance running. The schema and seed data are in `backend/data`.
 
 ### Frontend
 
-1. Create a `.env` file in the `frontend` directory with the following environment variables:
+1. Copy `frontend/.env-example` to `frontend/.env` and set `VITE_BACKEND_URL` to the backend API base URL, including the `/api` prefix (e.g. `http://localhost:3000/api`):
 
-    ```env
-    VITE_BACKEND_URL
+    ```bash
+    cp frontend/.env-example frontend/.env
     ```
 
 ## Usage
