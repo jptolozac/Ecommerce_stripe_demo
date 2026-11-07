@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import cancelIcon from '/src/assets/cancel.svg'
 import completedIcon from '/src/assets/completed.svg'
 import '../styles/toast.css'
