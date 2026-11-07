@@ -42,7 +42,7 @@ function getPendingFacture({ cliente_id }) {
 }
 
 function updateTotal({ factura_id }) {
-    return new Promise((resolve, reject) => con.query(`UPDATE factura SET total = (SELECT SUM(lb.precio) as total FROM factura_libro fl JOIN libro lb ON (fl.libro_id = lb.id) WHERE FL.factura_id = factura.id) WHERE factura.id = ?`, factura_id, (error, result) => {
+    return new Promise((resolve, reject) => con.query(`UPDATE factura SET total = (SELECT SUM(lb.precio) as total FROM factura_libro fl JOIN libro lb ON (fl.libro_id = lb.id) WHERE fl.factura_id = factura.id) WHERE factura.id = ?`, factura_id, (error, result) => {
         if (error) reject(error)
         resolve(result)
     }))
