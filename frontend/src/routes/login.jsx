@@ -2,7 +2,7 @@ import { Button } from "@mui/joy";
 import { MainLayout } from "../layouts/mainLayout";
 import FloatingLabelInput from "../components/inputLabel";
 import { login } from "../services/login";
-import { getCookie, setCookie } from "../helpers/cookies";
+import { setCookie } from "../helpers/cookies";
 
 export function Login() {
     const handleSubmit = async(event) => {
@@ -13,7 +13,6 @@ export function Login() {
         })
         if(token){
             setCookie("token", token)
-            // console.log(getCookie("token"));
             window.location.assign(location.origin)
         }else{
             alert("datos incorrectos")

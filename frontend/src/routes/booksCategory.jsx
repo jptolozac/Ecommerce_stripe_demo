@@ -6,11 +6,11 @@ import { ShowBooksSearch } from "../components/showBooksSearch"
 
 export function BooksCategory(){
     const { category } = useParams()
-    const { loading, books, searchByCategory } = useSearchBooks({ hideContent: null })
+    const { loading, books, searchByCategory } = useSearchBooks()
 
     useEffect(() => {
         searchByCategory(category)
-    }, [category])
+    }, [category, searchByCategory])
 
     return (
         <MainLayout>

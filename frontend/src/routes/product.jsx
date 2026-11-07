@@ -5,7 +5,7 @@ import { CoinFormatter } from "../helpers/coinFormatter"
 import { useEffect, useState, useContext } from "react"
 import { getCookie } from "../helpers/cookies"
 import { orderBook } from "../services/shoppingCart"
-import { CartContext } from "../context/cart"
+import { CartContext } from "../context/cartContext"
 
 export function Product() {
     window.scroll(0, 0)

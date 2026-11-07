@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// eslint-disable-next-line no-undef
 const LOGIN_ENDPOINT = import.meta.env.VITE_BACKEND_URL
 
 export async function login({ username, password }){

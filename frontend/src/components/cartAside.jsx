@@ -4,7 +4,7 @@ import '../styles/cartAside.css'
 import closeWindow from '../assets/close.svg'
 import { BookCard } from "./bookCard"
 import { orderBook, removeBookFromFacture } from "../services/shoppingCart"
-import { CartContext } from "../context/cart"
+import { CartContext } from "../context/cartContext"
 import { proceedToPayment } from "../services/pays"
 
 
@@ -77,7 +77,6 @@ export function CartAside() {
                         >Proceder al pago</button>
                     </div>
                 }
-                {/* <button onClick={(e) => plusOne(e.target.value)}>{state}</button> */}
             </aside>
         </div>
     )

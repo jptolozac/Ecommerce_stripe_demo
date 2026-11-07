@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import debounce from 'just-debounce-it'
 import { getBooksByCategory, getWantedBooks } from '../services/Books'
 
@@ -35,7 +35,7 @@ export function useSearchBooks() {
         }, 500)
     }
 
-    const searchByCategory = (category) => {
+    const searchByCategory = useCallback((category) => {
         setLoading(true)
         getBooksByCategory({ category }).then(data => {
             setBooks(data)
@@ -43,7 +43,7 @@ export function useSearchBooks() {
         })
 
         setSearch(String(category))
-    }
+    }, [])
 
     useEffect(() => {
         // if(hideContent)

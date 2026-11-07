@@ -2,7 +2,6 @@ import axios from "axios";
 import { getCookie } from "../helpers/cookies";
 import { shapeBooks } from "../helpers/shapeBooks";
 
-// eslint-disable-next-line no-undef
 const ENDPOINT_LIBROS_FACTURAS = `${import.meta.env.VITE_BACKEND_URL}/facturas`
 
 export async function getBooks() {
@@ -61,16 +60,5 @@ export async function removeBookFromFacture({ bookId }) {
     } catch (error) {
         console.log(error);
         return null;
-    }
-}
-
-export async function proceedToPayment() {
-    try {
-        const response = await axios.post(`${ENDPOINT_LIBROS_FACTURAS/* ETC... */}`, {})
-        const data = await response.data()
-        console.log(data);
-    } catch (error) {
-        console.log(error);
-        return null
     }
 }

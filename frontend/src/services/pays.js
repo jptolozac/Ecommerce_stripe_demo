@@ -1,7 +1,6 @@
 import axios from "axios"
 import { getCookie } from "../helpers/cookies"
 
-// eslint-disable-next-line no-undef
 const ENDPOINT_LIBROS_PAGOS = `${import.meta.env.VITE_BACKEND_URL}/pagos`
 
 
