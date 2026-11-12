@@ -143,6 +143,9 @@ Ecommerce_stripe_demo/
 │   │   ├── services/            # Llamadas a la API
 │   │   └── hooks/ helpers/
 │   └── .env-example
+├── infra/
+│   └── cloudformation/
+│       └── 00-budget.yaml       # Alerta de presupuesto mensual
 ├── MER.drawio                   # Modelo entidad-relación
 ├── documento requerimientos.pdf # Documento de requerimientos
 ├── package.json                 # Scripts del monorepo
