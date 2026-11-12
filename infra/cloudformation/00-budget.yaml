@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lab CI/CD EKS - alerta de presupuesto mensual
+
+Parameters:
+  Email:
+    Type: String
+    Description: Correo que recibe las alertas
+  LimiteMensualUSD:
+    Type: Number
+    Description: Limite mensual en USD para alertas
+    Default: 20
+
+Resources:
+  PresupuestoLab:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: lab-cicd-eks
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: !Ref LimiteMensualUSD
+          Unit: USD
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            ThresholdType: PERCENTAGE
+            Threshold: 20
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref Email
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            ThresholdType: PERCENTAGE
+            Threshold: 50
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref Email
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            ThresholdType: PERCENTAGE
+            Threshold: 80
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref Email
+
+Outputs:
+  PresupuestoLab:
+    Value: !Ref PresupuestoLab
