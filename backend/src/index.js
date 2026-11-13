@@ -5,5 +5,5 @@ mysqlCon()
 
 
 app.listen(app.get('port'), app.get('host'), () => {
-    console.log(`Servidor iniciado en http://localhost:${app.get("port")}`);
+    console.log(`Servidor iniciado en http://${app.get('host')}:${app.get("port")}`);
 })
