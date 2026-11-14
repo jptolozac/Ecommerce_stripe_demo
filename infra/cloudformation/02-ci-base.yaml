@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Lab CI/CD EKS - repositorios ECR y bucket de artefactos
+
+Parameters:
+  Proyecto:
+    Type: String
+    Default: lab-cicd
+
+Resources:
+  RepoBackend:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Sub ${Proyecto}/backend
+      EmptyOnDelete: true              # al borrar el stack, borra las imágenes primero
+      ImageScanningConfiguration:
+        ScanOnPush: true               # escaneo básico de vulnerabilidades, gratis
+      LifecyclePolicy:
+        LifecyclePolicyText: |
+          {
+            "rules": [{
+              "rulePriority": 1,
+              "description": "Conservar solo las 5 imagenes mas recientes",
+              "selection": {
+                "tagStatus": "any",
+                "countType": "imageCountMoreThan",
+                "countNumber": 5
+              },
+              "action": { "type": "expire" }
+            }]
+          }
+  RepoFrontend:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Sub ${Proyecto}/frontend
+      EmptyOnDelete: true              # al borrar el stack, borra las imágenes primero
+      ImageScanningConfiguration:
+        ScanOnPush: true               # escaneo básico de vulnerabilidades, gratis
+      LifecyclePolicy:
+        LifecyclePolicyText: |
+          {
+            "rules": [{
+              "rulePriority": 1,
+              "description": "Conservar solo las 5 imagenes mas recientes",
+              "selection": {
+                "tagStatus": "any",
+                "countType": "imageCountMoreThan",
+                "countNumber": 5
+              },
+              "action": { "type": "expire" }
+            }]
+          }
+
+  BucketArtefactos:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: RemoveOldObjects
+            Status: Enabled
+            ExpirationInDays: 7
+            
+Outputs:
+  RepoBackendUri:
+    Description: URI del repositorio ECR del backend
+    Value: !GetAtt RepoBackend.RepositoryUri
+    Export:
+      Name: !Sub ${Proyecto}-RepoBackendUri
+  RepoFrontendUri:
+    Description: URI del repositorio ECR del frontend
+    Value: !GetAtt RepoFrontend.RepositoryUri
+    Export:
+      Name: !Sub ${Proyecto}-RepoFrontendUri
+  BucketArtefactosNombre:
+    Description: Nombre del artefacto
+    Value: !Ref BucketArtefactos
+    Export:
+      Name: !Sub ${Proyecto}-BucketArtefactos
