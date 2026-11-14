@@ -14,7 +14,7 @@ RUN pnpm --filter backend deploy --legacy --prod /out
 FROM node:22-slim
 WORKDIR /app
 
-COPY --from0=build --chown=node:node /out .
+COPY --from=build --chown=node:node /out .
 USER node
 
 EXPOSE 3000

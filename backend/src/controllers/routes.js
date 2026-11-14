@@ -39,6 +39,8 @@ app.use('/api/categorias'/* , security */, categoriaController)
 app.use('/api/facturas', security, facturaController)
 app.use('/api/pagos', pagoController)
 
-
+app.use('/api/health', (req, res) => {
+    res.status(200).json({ status: 'UP' })
+})
 
 module.exports = app;
