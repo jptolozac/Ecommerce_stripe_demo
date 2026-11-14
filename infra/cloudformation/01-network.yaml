@@ -1,11 +1,11 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Description: Lab CI/CD EKS - red (VPC con 2 subredes publicas, sin NAT)
 
 Parameters:
   Proyecto:
     Type: String
     Default: lab-cicd
-    
+
 Resources:
   Vpc:
     Type: AWS::EC2::VPC
@@ -15,48 +15,52 @@ Resources:
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: !Sub "${Proyecto}-vpc"
+          Value: !Sub ${Proyecto}-vpc
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
-  
+
   AttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
       VpcId: !Ref Vpc
       InternetGatewayId: !Ref InternetGateway
-      
+
   SubnetPublicaA:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref Vpc
       CidrBlock: 10.0.0.0/20
-      AvailabilityZone: !Select [0, !GetAZs '']
+      AvailabilityZone: !Select
+        - 0
+        - !GetAZs ''
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub "${Proyecto}-public-a"
+          Value: !Sub ${Proyecto}-public-a
         - Key: kubernetes.io/role/elb
-          Value: "1"
+          Value: '1'
 
   SubnetPublicaB:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref Vpc
       CidrBlock: 10.0.16.0/20
-      AvailabilityZone: !Select [1, !GetAZs '']
+      AvailabilityZone: !Select
+        - 1
+        - !GetAZs ''
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub "${Proyecto}-public-b"
+          Value: !Sub ${Proyecto}-public-b
         - Key: kubernetes.io/role/elb
-          Value: "1"
+          Value: '1'
 
   RouteTablePublica:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref Vpc
-      
+
   RutaInternet:
     Type: AWS::EC2::Route
     DependsOn: AttachGateway
@@ -64,7 +68,7 @@ Resources:
       RouteTableId: !Ref RouteTablePublica
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
-      
+
   AsociacionA:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
@@ -80,9 +84,12 @@ Resources:
 Outputs:
   VpcId:
     Value: !Ref Vpc
-    Export: 
-      Name: !Sub "${Proyecto}-vpcId"
+    Export:
+      Name: !Sub ${Proyecto}-VpcId
   PublicSubnetIds:
-    Value: !Join ["," , [!Ref SubnetPublicaA, !Ref SubnetPublicaB]]
-    Export: 
-      Name: !Sub "${Proyecto}-publicSubnetIds"
+    Value: !Join
+      - ','
+      - - !Ref SubnetPublicaA
+        - !Ref SubnetPublicaB
+    Export:
+      Name: !Sub ${Proyecto}-PublicSubnetIds
