@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Lab CI/CD EKS - CI de pull requests (CodeBuild + webhook de GitHub)
+
+Parameters:
+  Proyecto:
+    Type: String
+    Default: lab-cicd
+  RepoUrl:
+    Type: String
+    Default: https://github.com/jptolozac/Ecommerce_stripe_demo
+
+Resources:
+  # Si no lo creamos nosotros, CodeBuild crea uno solo, SIN fecha de expiración
+  # y FUERA del stack: quedaría huérfano al borrar todo.
+  LogsPR:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    Properties:
+      LogGroupName: !Sub /aws/codebuild/${Proyecto}-pr-check
+      RetentionInDays: 7
+
+  RolCodeBuildPR:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: pr-check
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: EscribirLogs
+                Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !GetAtt LogsPR.Arn
+              - Sid: UsarConexionGitHub
+                Effect: Allow
+                Action:
+                  - codeconnections:UseConnection
+                  - codeconnections:GetConnection
+                  - codeconnections:GetConnectionToken
+                  - codestar-connections:UseConnection
+                  - codestar-connections:GetConnection
+                  - codestar-connections:GetConnectionToken
+                Resource:
+                  Fn::ImportValue: !Sub ${Proyecto}-GHConnectionArn
+
+  ProyectoPR:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Sub ${Proyecto}-pr-check
+      ServiceRole: !GetAtt RolCodeBuildPR.Arn
+      TimeoutInMinutes: 15
+      Source:
+        Type: GITHUB
+        Location: !Ref RepoUrl
+        BuildSpec: infra/buildSpecs/pr.yaml
+        ReportBuildStatus: true
+        Auth:
+          Type: CODECONNECTIONS
+          Resource:
+            Fn::ImportValue: !Sub ${Proyecto}-GHConnectionArn
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux-x86_64-standard:5.0
+        PrivilegedMode: true
+      Artifacts:
+        Type: NO_ARTIFACTS
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: !Ref LogsPR
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED,PULL_REQUEST_REOPENED
+            - Type: BASE_REF
+              Pattern: ^refs/heads/main$
+            - Type: ACTOR_ACCOUNT_ID
+              Pattern: ^135926488$
