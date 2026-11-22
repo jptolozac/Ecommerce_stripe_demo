@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+    commands:
+      - corepack enable
+      - pnpm install --frozen-lockfile
+
+  pre_build:
+    commands:
+      - pnpm run lint
+      - pnpm run test
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c1-7)
+      - echo "Etiqueta de esta version - $IMAGE_TAG"
+      - REGISTRY=${REPO_BACKEND_URI%%/*}
+      - echo "Registry de las imágenes $REGISTRY"
+      - aws ecr get-login-password | docker login --username AWS --password-stdin $REGISTRY
+
+  build:
+    commands:
+      - docker build -f backend/Dockerfile  -t ${REPO_BACKEND_URI}:${IMAGE_TAG}  .
+      - docker build -f frontend/Dockerfile -t ${REPO_FRONTEND_URI}:${IMAGE_TAG} .
+      - docker push ${REPO_BACKEND_URI}:${IMAGE_TAG}
+      - docker push ${REPO_FRONTEND_URI}:${IMAGE_TAG}
+
+  post_build:
+    commands:
+      - echo "BACKEND_IMAGE=$REPO_BACKEND_URI:$IMAGE_TAG" > imagen.env
+      - echo "FRONTEND_IMAGE=$REPO_FRONTEND_URI:$IMAGE_TAG" >> imagen.env
+
+artifacts:
+  files:
+    - imagen.env
