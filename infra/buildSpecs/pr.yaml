@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+    commands:
+      - corepack enable
+      - pnpm install --frozen-lockfile
+
+  pre_build:
+    commands:
+      - pnpm run lint
+      - pnpm run test
+
+  build:
+    commands:
+      - docker build -f backend/Dockerfile  -t ecommerce-backend:pr  .
+      - docker build -f frontend/Dockerfile -t ecommerce-frontend:pr .

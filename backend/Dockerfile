@@ -1,5 +1,5 @@
 FROM node:22-slim AS build
-RUN corepack enable                      # trae pnpm sin instalarlo a mano
+RUN corepack enable
 WORKDIR /repo
 
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
