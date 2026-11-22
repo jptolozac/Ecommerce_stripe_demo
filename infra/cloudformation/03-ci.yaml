@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Lab CI/CD EKS - CI de pull requests (CodeBuild + webhook de GitHub)
+Description: Lab CI/CD EKS - CI de pull requests (CodeBuild + webhook) y pipeline de main (CodePipeline)
 
 Parameters:
   Proyecto:
@@ -8,10 +8,12 @@ Parameters:
   RepoUrl:
     Type: String
     Default: https://github.com/jptolozac/Ecommerce_stripe_demo
+  RepoId:
+    Type: String
+    Default: jptolozac/Ecommerce_stripe_demo
 
 Resources:
-  # Si no lo creamos nosotros, CodeBuild crea uno solo, SIN fecha de expiración
-  # y FUERA del stack: quedaría huérfano al borrar todo.
+  # ───────────── Logs (dentro del stack, con expiración) ─────────────
   LogsPR:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Delete
@@ -19,6 +21,14 @@ Resources:
       LogGroupName: !Sub /aws/codebuild/${Proyecto}-pr-check
       RetentionInDays: 7
 
+  LogsMain:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    Properties:
+      LogGroupName: !Sub /aws/codebuild/${Proyecto}-main-build
+      RetentionInDays: 7
+
+  # ───────────── Roles ─────────────
   RolCodeBuildPR:
     Type: AWS::IAM::Role
     Properties:
@@ -52,6 +62,104 @@ Resources:
                 Resource:
                   Fn::ImportValue: !Sub ${Proyecto}-GHConnectionArn
 
+  RolCodeBuildMain:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: main-build
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: EscribirLogs
+                Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !GetAtt LogsMain.Arn
+              - Sid: LeerYEscribirArtefactos
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:PutObject
+                # El export entrega el nombre del bucket; IAM necesita un ARN
+                Resource: !Sub
+                  - arn:aws:s3:::${Bucket}/*
+                  - Bucket:
+                      Fn::ImportValue: !Sub ${Proyecto}-BucketArtefactos
+              - Sid: LoginEnECR
+                Effect: Allow
+                Action: ecr:GetAuthorizationToken
+                Resource: "*"                          # el login es contra el registro, no un repo
+              - Sid: PushAMisRepos
+                Effect: Allow
+                Action:
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:InitiateLayerUpload
+                  - ecr:UploadLayerPart
+                  - ecr:CompleteLayerUpload
+                  - ecr:PutImage
+                Resource:
+                  - !Sub arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/${Proyecto}/backend
+                  - !Sub arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/${Proyecto}/frontend
+
+  # El rol del ORQUESTADOR, mueve artefactos, usa la conexión y lanza el build.
+  RolPipeline:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codepipeline.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: pipeline-main
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: Artefactos                         # guarda el zip del código y lee imagen.env
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:PutObject
+                Resource: !Sub
+                  - arn:aws:s3:::${Bucket}/*
+                  - Bucket:
+                      Fn::ImportValue: !Sub ${Proyecto}-BucketArtefactos
+              - Sid: ConfiguracionDelBucket             # CodePipeline revisa el bucket antes de usarlo
+                Effect: Allow
+                Action:
+                  - s3:GetBucketVersioning
+                  - s3:GetBucketLocation
+                Resource: !Sub
+                  - arn:aws:s3:::${Bucket}
+                  - Bucket:
+                      Fn::ImportValue: !Sub ${Proyecto}-BucketArtefactos
+              - Sid: UsarConexionGitHub
+                Effect: Allow
+                Action:
+                  - codeconnections:UseConnection
+                  - codestar-connections:UseConnection
+                Resource:
+                  Fn::ImportValue: !Sub ${Proyecto}-GHConnectionArn
+              - Sid: InvocarBuild                       # lanzar el build y preguntar "¿ya terminó?"
+                Effect: Allow
+                Action:
+                  - codebuild:StartBuild
+                  - codebuild:BatchGetBuilds
+                Resource: !GetAtt ProyectoMain.Arn      # SOLO este proyecto, no el de los PRs
+
+  # ───────────── Proyectos de CodeBuild ─────────────
   ProyectoPR:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -87,3 +195,79 @@ Resources:
               Pattern: ^refs/heads/main$
             - Type: ACTOR_ACCOUNT_ID
               Pattern: ^135926488$
+
+  ProyectoMain:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Sub ${Proyecto}-main-build
+      ServiceRole: !GetAtt RolCodeBuildMain.Arn
+      TimeoutInMinutes: 15
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: infra/buildSpecs/main.yaml
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux-x86_64-standard:5.0
+        PrivilegedMode: true
+        EnvironmentVariables:
+          - Name: REPO_BACKEND_URI
+            Value:
+              Fn::ImportValue: !Sub ${Proyecto}-RepoBackendUri
+          - Name: REPO_FRONTEND_URI
+            Value:
+              Fn::ImportValue: !Sub ${Proyecto}-RepoFrontendUri
+      Artifacts:
+        Type: CODEPIPELINE
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: !Ref LogsMain
+
+  # ───────────── Pipeline de main ─────────────
+  # Sin Triggers explícitos. Un pipeline V2 arranca por defecto con cada push a BranchName.
+  PipelineMain:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      Name: !Sub ${Proyecto}-main
+      PipelineType: V2
+      RoleArn: !GetAtt RolPipeline.Arn
+      ArtifactStore:
+        Type: S3
+        Location:
+          Fn::ImportValue: !Sub ${Proyecto}-BucketArtefactos
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: Source
+              ActionTypeId:
+                Category: Source
+                Owner: AWS
+                Provider: CodeStarSourceConnection
+                Version: "1"
+              Configuration:
+                ConnectionArn:
+                  Fn::ImportValue: !Sub ${Proyecto}-GHConnectionArn
+                FullRepositoryId: !Ref RepoId
+                BranchName: main
+                OutputArtifactFormat: CODE_ZIP
+              OutputArtifacts:
+                - Name: CodigoFuente
+        - Name: Build
+          Actions:
+            - Name: BuildYPush
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName: !Ref ProyectoMain
+              InputArtifacts:
+                - Name: CodigoFuente
+              OutputArtifacts:
+                - Name: ImagenInfo # imagen.env, para la futura etapa Deploy
+
+Outputs:
+  PipelineName:
+    Value: !Ref PipelineMain
