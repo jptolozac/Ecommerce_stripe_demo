@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Lab CI/CD EKS - conexion con GitHub (solo AWS, permanente)
+
+Parameters:
+  Proyecto:
+    Type: String
+    Default: lab-cicd
+
+Resources:
+  GHConnection:
+    Type: AWS::CodeConnections::Connection
+    Properties:
+      ConnectionName: !Sub ${Proyecto}-github
+      ProviderType: GitHub
+      
+Outputs:
+  GHConnectionARN:
+    Description: ARN correspondiente a la conexión con GitHub
+    Value: !Ref GHConnection
+    Export:
+      Name: !Sub ${Proyecto}-GHConnectionArn
