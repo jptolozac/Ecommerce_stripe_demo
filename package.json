@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Bookstore e-commerce monorepo (Express backend + React frontend) with Stripe payments",
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@12.23.0",
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },

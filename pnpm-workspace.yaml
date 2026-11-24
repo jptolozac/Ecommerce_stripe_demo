@@ -3,7 +3,7 @@ packages:
   - frontend
 
 # pnpm 10 skips dependency install scripts unless allowed here
-onlyBuiltDependencies:
-  - "@swc/core"
-  - bcrypt
-  - esbuild
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  bcrypt: true
