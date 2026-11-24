@@ -1,4 +1,4 @@
-create view libros_mas_vendidos as
+create or replace view libros_mas_vendidos as
 select lb.*, count(lb.id) as ventas
 from libro lb join factura_libro fl on(lb.id = fl.libro_id)
 			  join factura fac on(fac.id = fl.factura_id)
@@ -7,7 +7,7 @@ where ef.estado='pagada'
 group by lb.id
 order by ventas desc;
 
-create view libros_mas_vendidos_2024 as
+create or replace view libros_mas_vendidos_2024 as
 select lb.*, count(lb.id) as ventas
 from libro lb join factura_libro fl on(lb.id = fl.libro_id)
 			  join factura fac on(fac.id = fl.factura_id)
