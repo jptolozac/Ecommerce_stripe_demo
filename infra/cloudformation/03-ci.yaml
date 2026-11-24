@@ -158,6 +158,24 @@ Resources:
                   - codebuild:StartBuild
                   - codebuild:BatchGetBuilds
                 Resource: !GetAtt ProyectoMain.Arn      # SOLO este proyecto, no el de los PRs
+              - Sid: DesplegarEnEcs                     # leer el servicio, crear revisión y actualizarlo
+                Effect: Allow
+                Action:
+                  - ecs:DescribeServices
+                  - ecs:DescribeTaskDefinition
+                  - ecs:RegisterTaskDefinition
+                  - ecs:UpdateService
+                  - ecs:DescribeTasks
+                  - ecs:ListTasks
+                  - ecs:TagResource
+                Resource: "*"
+              - Sid: PasarRolDeTareas                   # la revisión nueva lleva el rol de ejecución
+                Effect: Allow
+                Action: iam:PassRole
+                Resource: !Sub arn:aws:iam::${AWS::AccountId}:role/${Proyecto}-ecs-exec
+                Condition:
+                  StringEquals:
+                    iam:PassedToService: ecs-tasks.amazonaws.com
 
   # ───────────── Proyectos de CodeBuild ─────────────
   ProyectoPR:
@@ -266,7 +284,22 @@ Resources:
               InputArtifacts:
                 - Name: CodigoFuente
               OutputArtifacts:
-                - Name: ImagenInfo # imagen.env, para la futura etapa Deploy
+                - Name: ImagenInfo
+        - Name: Deploy
+          Actions:
+            - Name: DeployEcs
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: ECS
+                Version: "1"
+              Configuration:
+                ClusterName: !Sub ${Proyecto}-cluster
+                ServiceName: !Sub ${Proyecto}-app
+                FileName: imagedefinitions.json
+                DeploymentTimeout: "15"
+              InputArtifacts:
+                - Name: ImagenInfo
 
 Outputs:
   PipelineName:
