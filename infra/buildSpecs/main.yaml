@@ -27,9 +27,9 @@ phases:
 
   post_build:
     commands:
-      - echo "BACKEND_IMAGE=$REPO_BACKEND_URI:$IMAGE_TAG" > imagen.env
-      - echo "FRONTEND_IMAGE=$REPO_FRONTEND_URI:$IMAGE_TAG" >> imagen.env
+      - printf '[{"name":"frontend","imageUri":"%s"},{"name":"backend","imageUri":"%s"}]' "$REPO_FRONTEND_URI:$IMAGE_TAG" "$REPO_BACKEND_URI:$IMAGE_TAG" > imagedefinitions.json
+      - cat imagedefinitions.json
 
 artifacts:
   files:
-    - imagen.env
+    - imagedefinitions.json
