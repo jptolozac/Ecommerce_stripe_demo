@@ -1,0 +1,68 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Lab CI/CD - base de datos RDS MySQL
+
+Parameters:
+  Proyecto:
+    Type: String
+    Default: lab-cicd
+  DbUser:
+    Type: String
+    Default: admin
+  DbPassword:
+    Type: String
+    NoEcho: true
+    MinLength: 8
+
+Resources:
+  DbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: MySQL solo desde la VPC
+      VpcId:
+        Fn::ImportValue: !Sub ${Proyecto}-VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 10.0.0.0/16
+
+  DbSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subredes de la base de datos
+      SubnetIds: !Split
+        - ","
+        - Fn::ImportValue: !Sub ${Proyecto}-PublicSubnetIds
+
+  Db:
+    Type: AWS::RDS::DBInstance
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      DBInstanceIdentifier: !Sub ${Proyecto}-db
+      Engine: mysql
+      EngineVersion: "8.4"
+      EngineLifecycleSupport: open-source-rds-extended-support-disabled
+      DBInstanceClass: db.t4g.micro
+      AllocatedStorage: "20"
+      StorageType: gp3
+      DBName: tienda_libros
+      MasterUsername: !Ref DbUser
+      MasterUserPassword: !Ref DbPassword
+      PubliclyAccessible: false
+      MultiAZ: false
+      BackupRetentionPeriod: 0
+      DBSubnetGroupName: !Ref DbSubnetGroup
+      VPCSecurityGroups:
+        - !GetAtt DbSecurityGroup.GroupId
+
+Outputs:
+  DbEndpoint:
+    Value: !GetAtt Db.Endpoint.Address
+    Export:
+      Name: !Sub ${Proyecto}-DbEndpoint
+  DbPort:
+    Value: !GetAtt Db.Endpoint.Port
+    Export:
+      Name: !Sub ${Proyecto}-DbPort

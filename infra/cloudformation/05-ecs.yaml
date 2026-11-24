@@ -1,0 +1,208 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Lab CI/CD - app en ECS Fargate detras de un ALB
+
+Parameters:
+  Proyecto:
+    Type: String
+    Default: lab-cicd
+  ImageTag:
+    Type: String
+  DbUser:
+    Type: String
+    Default: bibliotecario
+  DbPassword:
+    Type: String
+    NoEcho: true
+  JwtSecret:
+    Type: String
+    NoEcho: true
+
+Resources:
+  # ───────────── Red ─────────────
+  AlbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: HTTP desde internet al ALB
+      VpcId:
+        Fn::ImportValue: !Sub ${Proyecto}-VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  TaskSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Solo el ALB llega a nginx
+      VpcId:
+        Fn::ImportValue: !Sub ${Proyecto}-VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          SourceSecurityGroupId: !Ref AlbSecurityGroup
+
+  # ───────────── Load balancer ─────────────
+  Alb:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub ${Proyecto}-alb
+      Scheme: internet-facing
+      SecurityGroups:
+        - !Ref AlbSecurityGroup
+      Subnets: !Split
+        - ","
+        - Fn::ImportValue: !Sub ${Proyecto}-PublicSubnetIds
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      TargetType: ip
+      Protocol: HTTP
+      Port: 8080
+      VpcId:
+        Fn::ImportValue: !Sub ${Proyecto}-VpcId
+      HealthCheckPath: /api/health
+      HealthCheckIntervalSeconds: 15
+      HealthyThresholdCount: 2
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: "30"
+
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref Alb
+      Port: 80
+      Protocol: HTTP
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+
+  # ───────────── ECS ─────────────
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Sub ${Proyecto}-cluster
+
+  Logs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /ecs/${Proyecto}-app
+      RetentionInDays: 7
+
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${Proyecto}-ecs-exec
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: !Sub ${Proyecto}-app
+      RequiresCompatibilities: [FARGATE]
+      NetworkMode: awsvpc
+      Cpu: "512"
+      Memory: "1024"
+      ExecutionRoleArn: !GetAtt ExecutionRole.Arn
+      ContainerDefinitions:
+        - Name: backend
+          Image: !Sub
+            - "${Uri}:${ImageTag}"
+            - Uri:
+                Fn::ImportValue: !Sub ${Proyecto}-RepoBackendUri
+          Essential: true
+          PortMappings:
+            - ContainerPort: 3000
+          Environment:
+            - { Name: HOST, Value: 0.0.0.0 }
+            - { Name: PORT, Value: "3000" }
+            - { Name: MYSQL_HOST, Value: { "Fn::ImportValue": !Sub "${Proyecto}-DbEndpoint" } }
+            - { Name: MYSQL_PORT, Value: { "Fn::ImportValue": !Sub "${Proyecto}-DbPort" } }
+            - { Name: MYSQL_USER, Value: !Ref DbUser }
+            - { Name: MYSQL_PASSWORD, Value: !Ref DbPassword }
+            - { Name: MYSQL_DATABASE, Value: tienda_libros }
+            - { Name: SEED_DB, Value: "true" }
+            - { Name: JWT_SECRET, Value: !Ref JwtSecret }
+          HealthCheck:
+            Command:
+              - CMD
+              - node
+              - -e
+              - "fetch('http://127.0.0.1:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+            Interval: 10
+            Timeout: 5
+            Retries: 3
+            StartPeriod: 60
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref Logs
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: backend
+        - Name: frontend
+          Image: !Sub
+            - "${Uri}:${ImageTag}"
+            - Uri:
+                Fn::ImportValue: !Sub ${Proyecto}-RepoFrontendUri
+          Essential: true
+          PortMappings:
+            - ContainerPort: 8080
+          Environment:
+            - { Name: BACKEND_HOST, Value: 127.0.0.1 }
+          DependsOn:
+            - ContainerName: backend
+              Condition: HEALTHY
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref Logs
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: frontend
+
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn: Listener
+    Properties:
+      ServiceName: !Sub ${Proyecto}-app
+      Cluster: !Ref Cluster
+      TaskDefinition: !Ref TaskDefinition
+      LaunchType: FARGATE
+      DesiredCount: 1
+      HealthCheckGracePeriodSeconds: 120
+      DeploymentConfiguration:
+        MinimumHealthyPercent: 100
+        MaximumPercent: 200
+        DeploymentCircuitBreaker:
+          Enable: true
+          Rollback: true
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Ref TaskSecurityGroup
+          Subnets: !Split
+            - ","
+            - Fn::ImportValue: !Sub ${Proyecto}-PublicSubnetIds
+      LoadBalancers:
+        - ContainerName: frontend
+          ContainerPort: 8080
+          TargetGroupArn: !Ref TargetGroup
+
+Outputs:
+  Url:
+    Value: !Sub http://${Alb.DNSName}
+  ClusterName:
+    Value: !Ref Cluster
+  ServiceName:
+    Value: !GetAtt Service.Name

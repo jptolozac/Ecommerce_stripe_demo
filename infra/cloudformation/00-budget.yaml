@@ -26,6 +26,14 @@ Resources:
             NotificationType: ACTUAL
             ComparisonOperator: GREATER_THAN
             ThresholdType: PERCENTAGE
+            Threshold: 10
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref Email
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            ThresholdType: PERCENTAGE
             Threshold: 20
           Subscribers:
             - SubscriptionType: EMAIL
