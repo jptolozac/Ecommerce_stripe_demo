@@ -5,8 +5,8 @@ services:
     restart: always
     env_file:
       - ./backend/.env
-    volumes:
-      - ./backend/data:/docker-entrypoint-initdb.d:ro
+    # volumes:
+    #   - ./backend/db/migrations:/docker-entrypoint-initdb.d:ro
     ports:
       - "4306:3306"
     healthcheck:
