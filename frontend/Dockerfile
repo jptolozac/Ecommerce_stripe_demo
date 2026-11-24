@@ -15,6 +15,8 @@ RUN VITE_BACKEND_URL=$VITE_BACKEND_URL pnpm run build
 FROM nginx/nginx-unprivileged:stable-alpine
 
 COPY --from=build --chown=nginx:nginx /repo/frontend/dist/ /usr/share/nginx/html/
-COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
+COPY frontend/nginx/default.conf.template /etc/nginx/templates/default.conf.template
+
+ENV BACKEND_HOST=backend
 
 EXPOSE 8080
