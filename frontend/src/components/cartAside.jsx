@@ -40,7 +40,7 @@ export function CartAside() {
         <div>
             <label htmlFor={inputId} className='card-button'>
                 <img src={shoppingCart} alt="Shopping cart icon" />
-                <span className='text-xl'>Demo</span>
+                <span className='text-xl'>Carrito</span>
             </label>
             <input type="checkbox" id={inputId} />
             <aside className="cart">
